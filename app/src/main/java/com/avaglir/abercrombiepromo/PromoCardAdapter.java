@@ -1,10 +1,13 @@
 package com.avaglir.abercrombiepromo;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -12,29 +15,39 @@ import java.util.List;
  * Created by mammothbane on 9/4/2015.
  */
 public class PromoCardAdapter extends RecyclerView.Adapter<PromoCardAdapter.ViewHolder> {
-    private List<Promo> mPromoList;
+    private final List<Promo> mPromoList;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public CardView mCardView;
-        public ViewHolder(CardView view) {
+        public TextView mTextView;
+        public ImageView mImageView;
+        public ViewHolder(View view) {
             super(view);
-            mCardView = view;
+            mTextView = ((TextView) view.findViewById(R.id.tv_title));
+            mImageView = ((ImageView) view.findViewById(R.id.iv_card));
         }
     }
 
-    public PromoCardAdapter(List<Promo> promoList) {
+    public PromoCardAdapter(final List<Promo> promoList) {
         mPromoList = promoList;
     }
 
     public PromoCardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ll_card, parent, false);
 
-        return new ViewHolder((CardView)v);
+        return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(PromoCardAdapter.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(PromoCardAdapter.ViewHolder holder, int pos) {
+        Promo promo;
+        synchronized (mPromoList) {
+            promo = mPromoList.get(pos);
+        }
+        holder.mTextView.setText(promo.getTitle());
+        Picasso.with(holder.mImageView.getContext())
+                .load(promo.getImageUri())
+                .fit()
+                .into(holder.mImageView);
     }
 
     @Override

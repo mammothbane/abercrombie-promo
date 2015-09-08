@@ -1,46 +1,68 @@
 package com.avaglir.abercrombiepromo;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.Retrofit;
-import retrofit.http.GET;
-import retrofit.http.Headers;
+import javax.inject.Inject;
+
+import retrofit.Callback;
+import retrofit.Response;
 
 /**
  * Created by mammothbane on 9/4/2015.
  */
 public class PromoController {
-    private static PromoController promoController;
-    private AbercrombieService netService;
-    private final Object writeLock = new Object();
-    private ArrayList<Promo> promos = new ArrayList<>();
+    @Inject NetService netService;
+    @Inject MainActivity mMainActivity;
+    private final ArrayList<Promo> mPromos = new ArrayList<>();
 
-    private PromoController() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.abercrombie.com/anf/nativeapp/Feeds").build();
-        netService = retrofit.create(AbercrombieService.class);
-    }
-
-    public static PromoController getPromoController() {
-        if (promoController == null) promoController = new PromoController();
-        return promoController;
-    }
+    @Inject
+    public PromoController() {}
 
     public List<Promo> getPromos() {
-        return promos;
+        return mPromos;
     }
 
     /**
      * asynchronously request promo list to be updated from the feed
      */
     public void updatePromos() {
+        netService.update().enqueue(new Callback<List<Promo>>() {
+            @Override
+            public void onResponse(Response<List<Promo>> response) {
+                mergeIntoPromoList(response.body());
+                mMainActivity.notifyRefreshCompleted();
+            }
 
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d(getClass().getSimpleName(), "failed to download new promos", t);
+                mMainActivity.notifyRefreshCompleted();
+            }
+        });
+    }
+
+    private void mergeIntoPromoList(List<Promo> list) {
+        boolean indices[] = new boolean[mPromos.size()]; // all false by default
+        ArrayList<Promo> toAdd = new ArrayList<>();
+        for (Promo p : list) {
+            int existingPromo = mPromos.indexOf(p);
+            if (existingPromo != -1) {
+                mPromos.get(existingPromo).updateFrom(p);
+                indices[existingPromo] = true;
+            } else {
+                toAdd.add(p);
+            }
+        }
+
+        synchronized (mPromos) {
+            for (int i = 0; i < indices.length; i++) {
+                if (!indices[i]) mPromos.remove(i);
+            }
+            mPromos.addAll(toAdd);
+        }
     }
 }
 
-interface AbercrombieService {
-    @Headers({ "User-Agent: Abercrombie Promo App by mammothbane", "Accept: application/json" })
-    @GET("/promotions.json")
-    Call<List<Promo>> getPromos();
-}

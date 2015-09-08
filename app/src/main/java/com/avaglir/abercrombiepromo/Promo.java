@@ -1,5 +1,7 @@
 package com.avaglir.abercrombiepromo;
 
+import android.net.Uri;
+
 /**
  * Created by mammothbane on 9/4/2015.
  *
@@ -7,19 +9,28 @@ package com.avaglir.abercrombiepromo;
  */
 public class Promo {
     private String buttonTitle;
-    private String buttonTarget;
+    private Uri buttonTarget;
     private String title;
     private String description;
     private String footer;
-    private String imageUrl;
+    private Uri imageUri;
 
-    public Promo(String buttonTitle, String buttonTarget, String title, String description, String footer, String imageUrl) {
+    public Promo(String buttonTitle, Uri buttonTarget, String title, String description, String footer, Uri imageUri) {
         this.buttonTitle = buttonTitle;
         this.buttonTarget = buttonTarget;
         this.title = title;
         this.description = description;
         this.footer = footer;
-        this.imageUrl = imageUrl;
+        this.imageUri = imageUri;
+    }
+
+    public void updateFrom(Promo p) {
+        this.buttonTitle = p.buttonTitle;
+        this.buttonTarget = p.buttonTarget;
+        this.title = p.title;
+        this.description = p.description;
+        this.footer = p.footer;
+        this.imageUri = p.imageUri;
     }
 
     @Override
@@ -30,13 +41,13 @@ public class Promo {
                 && ((Promo) o).getTitle().equals(this.title)
                 && ((Promo) o).getDescription().equals(this.description)
                 && ((Promo) o).getFooter().equals(this.footer)
-                && ((Promo) o).getImageUrl().equals(this.imageUrl);
+                && ((Promo) o).getImageUri().equals(this.imageUri);
     }
 
     @Override
     public int hashCode() {
         return buttonTitle.hashCode() + buttonTarget.hashCode() + title.hashCode() + description.hashCode()
-                + footer.hashCode() + imageUrl.hashCode();
+                + footer.hashCode() + imageUri.hashCode();
     }
 
     public String getButtonTitle() {
@@ -47,11 +58,11 @@ public class Promo {
         this.buttonTitle = buttonTitle;
     }
 
-    public String getButtonTarget() {
+    public Uri getButtonTarget() {
         return buttonTarget;
     }
 
-    public void setButtonTarget(String buttonTarget) {
+    public void setButtonTarget(Uri buttonTarget) {
         this.buttonTarget = buttonTarget;
     }
 
@@ -79,11 +90,11 @@ public class Promo {
         this.footer = footer;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public Uri getImageUri() {
+        return imageUri;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
     }
 }
