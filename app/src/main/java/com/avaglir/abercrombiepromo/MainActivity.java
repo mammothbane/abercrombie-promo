@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class MainActivity extends Activity {
 
     private RecyclerView mRecyclerView;
@@ -18,6 +20,7 @@ public class MainActivity extends Activity {
 
     private List<Promo> mPromoList;
 
+    @Inject
     PromoController promoController;
 
     @Override
@@ -25,14 +28,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        promoController = DaggerMainActivityComponent.builder()
+        MainActivityComponent component = DaggerMainActivityComponent.builder()
                 .netModule(new NetModule())
                 .activityModule(new ActivityModule(this))
-                .build()
-                .promoController();
-
-//        Picasso.with(this).setLoggingEnabled(true);
-//        Picasso.with(this).setIndicatorsEnabled(true);
+                .build();
+        component.inject(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
         mRecyclerView.setHasFixedSize(true); //todo: idk if they're fixed or not

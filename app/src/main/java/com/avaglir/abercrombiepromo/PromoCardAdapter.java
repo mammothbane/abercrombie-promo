@@ -45,7 +45,7 @@ public class PromoCardAdapter extends RecyclerView.Adapter<PromoCardAdapter.View
         }
         holder.mTextView.setText(promo.getTitle());
         Picasso.with(holder.mImageView.getContext())
-                .load(promo.getImageUri())
+                .load(promo.getImage())
                 .fit()
                 .into(holder.mImageView);
     }

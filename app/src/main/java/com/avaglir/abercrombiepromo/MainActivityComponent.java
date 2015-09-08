@@ -7,5 +7,7 @@ import dagger.Component;
  */
 @Component(modules = { NetModule.class, ActivityModule.class})
 public interface MainActivityComponent {
+    void inject(MainActivity mainActivity);
+
     PromoController promoController();
 }

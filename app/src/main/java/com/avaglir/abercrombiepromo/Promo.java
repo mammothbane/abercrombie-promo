@@ -1,69 +1,84 @@
 package com.avaglir.abercrombiepromo;
 
-import android.net.Uri;
-
 /**
  * Created by mammothbane on 9/4/2015.
  *
  * promo model
  */
 public class Promo {
-    private String buttonTitle;
-    private Uri buttonTarget;
-    private String title;
-    private String description;
-    private String footer;
-    private Uri imageUri;
+    Button button;
+    String title;
+    String description;
+    String footer;
+    String image;
 
-    public Promo(String buttonTitle, Uri buttonTarget, String title, String description, String footer, Uri imageUri) {
-        this.buttonTitle = buttonTitle;
-        this.buttonTarget = buttonTarget;
+    public static class Button {
+        private String title;
+        private String target;
+
+        public Button(String title, String target) {
+            this.title = title;
+            this.target = target;
+        }
+
+        public String getTarget() {
+            return target;
+        }
+
+        public void setTarget(String target) {
+            this.target = target;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+    }
+
+    public Promo(String buttonTitle, String buttonTarget, String title, String description, String footer, String image) {
+        this.button = new Button(buttonTitle, buttonTarget);
         this.title = title;
         this.description = description;
         this.footer = footer;
-        this.imageUri = imageUri;
+        this.image = image;
     }
 
     public void updateFrom(Promo p) {
-        this.buttonTitle = p.buttonTitle;
-        this.buttonTarget = p.buttonTarget;
+        this.button.setTitle(p.getButtonTitle());
+        this.button.setTarget(p.getButtonTarget());
         this.title = p.title;
         this.description = p.description;
         this.footer = p.footer;
-        this.imageUri = p.imageUri;
+        this.image = p.image;
     }
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Promo
-                && ((Promo) o).getButtonTarget().equals(this.buttonTarget)
-                && ((Promo) o).getButtonTitle().equals(this.buttonTitle)
-                && ((Promo) o).getTitle().equals(this.title)
-                && ((Promo) o).getDescription().equals(this.description)
-                && ((Promo) o).getFooter().equals(this.footer)
-                && ((Promo) o).getImageUri().equals(this.imageUri);
+        return o instanceof Promo && ((Promo) o).getTitle().equals(this.title);
     }
 
     @Override
     public int hashCode() {
-        return buttonTitle.hashCode() + buttonTarget.hashCode() + title.hashCode() + description.hashCode()
-                + footer.hashCode() + imageUri.hashCode();
+        return title.hashCode();
     }
 
     public String getButtonTitle() {
-        return buttonTitle;
+        return button.getTitle();
     }
 
     public void setButtonTitle(String buttonTitle) {
-        this.buttonTitle = buttonTitle;
+        button.setTitle(buttonTitle);
     }
 
-    public Uri getButtonTarget() {
-        return buttonTarget;
+    public String getButtonTarget() {
+        return button.getTarget();
     }
 
-    public void setButtonTarget(Uri buttonTarget) {
-        this.buttonTarget = buttonTarget;
+    public void setButtonTarget(String buttonTarget) {
+        button.setTarget(buttonTarget);
     }
 
     public String getTitle() {
@@ -90,11 +105,11 @@ public class Promo {
         this.footer = footer;
     }
 
-    public Uri getImageUri() {
-        return imageUri;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

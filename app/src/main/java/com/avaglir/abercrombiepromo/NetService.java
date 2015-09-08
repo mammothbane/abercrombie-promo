@@ -1,7 +1,5 @@
 package com.avaglir.abercrombiepromo;
 
-import java.util.List;
-
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Headers;
@@ -11,6 +9,6 @@ import retrofit.http.Headers;
  */
 public interface NetService {
     @Headers({ "User-Agent: Abercrombie Promo App by mammothbane", "Accept: application/json" })
-    @GET("/promotions.json")
-    Call<List<Promo>> update();
+    @GET("/anf/nativeapp/Feeds/promotions.json")
+    Call<PromoController.PromoListWrapper> update();
 }
