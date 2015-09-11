@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme.Material.NoActionBar">
-
+    <style name="AppTheme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:colorPrimaryDark">@color/screen_background_selector_dark</item>
+        <item name="android:windowBackground">@color/primary_dark_material_dark</item>
+        <item name="android:colorBackground">@color/primary_dark_material_dark</item>
+        <item name="android:statusBarColor">@color/primary_dark_material_dark</item>
     </style>
+
 </resources>

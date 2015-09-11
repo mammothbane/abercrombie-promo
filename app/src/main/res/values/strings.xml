@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Abercrombie Promo</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="nothing_here">Nothing here!</string>
+    <string name="abercrombie_title"><![CDATA[Abercrombie & Fitch]]></string>
 </resources>

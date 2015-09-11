@@ -36,6 +36,7 @@ public class PromoController {
             @Override
             public void onResponse(Response<PromoListWrapper> response) {
                 List<Promo> list = response.body().promotions;
+                mergeIntoPromoList(list);
                 mMainActivity.notifyRefreshCompleted();
             }
 

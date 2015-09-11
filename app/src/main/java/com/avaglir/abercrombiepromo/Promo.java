@@ -1,12 +1,15 @@
 package com.avaglir.abercrombiepromo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mammothbane on 9/4/2015.
  *
  * promo model
  */
 public class Promo {
-    Button button;
+    List<Button> button;
     String title;
     String description;
     String footer;
@@ -39,7 +42,8 @@ public class Promo {
     }
 
     public Promo(String buttonTitle, String buttonTarget, String title, String description, String footer, String image) {
-        this.button = new Button(buttonTitle, buttonTarget);
+        this.button = new ArrayList<>();
+        button.add(new Button(buttonTitle, buttonTarget));
         this.title = title;
         this.description = description;
         this.footer = footer;
@@ -47,8 +51,8 @@ public class Promo {
     }
 
     public void updateFrom(Promo p) {
-        this.button.setTitle(p.getButtonTitle());
-        this.button.setTarget(p.getButtonTarget());
+        this.button.get(0).setTitle(p.getButtonTitle());
+        this.button.get(0).setTarget(p.getButtonTarget());
         this.title = p.title;
         this.description = p.description;
         this.footer = p.footer;
@@ -66,19 +70,19 @@ public class Promo {
     }
 
     public String getButtonTitle() {
-        return button.getTitle();
+        return button.get(0).getTitle();
     }
 
     public void setButtonTitle(String buttonTitle) {
-        button.setTitle(buttonTitle);
+        button.get(0).setTitle(buttonTitle);
     }
 
     public String getButtonTarget() {
-        return button.getTarget();
+        return button.get(0).getTarget();
     }
 
     public void setButtonTarget(String buttonTarget) {
-        button.setTarget(buttonTarget);
+        button.get(0).setTarget(buttonTarget);
     }
 
     public String getTitle() {

@@ -1,24 +1,73 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MainActivity">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:orientation="vertical"
+    android:clipToPadding="false">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/compat_statusbar_placeholder"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin">
+        android:layout_below="@+id/fl_title">
 
-        <android.support.v7.widget.RecyclerView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rv_main"
-            android:scrollbars="vertical"/>
+            android:id="@+id/rl_main"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nothing_here"
+                android:id="@+id/tv_nothing_here"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="#181818"
+                android:layout_centerInParent="true"
+                android:paddingBottom="15dp"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rv_main"
+                android:scrollbars="vertical"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/fl_title"
+        android:elevation="4dp"
+        android:clipToPadding="false"
+        android:layout_below="@+id/compat_statusbar_placeholder">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/abercrombie_title"
+            android:id="@+id/tv_abercrombie_title"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:typeface="serif"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+    </FrameLayout>
 
 </RelativeLayout>
