@@ -15,40 +15,32 @@
         android:id="@+id/srl_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/fl_title">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rl_main"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nothing_here"
-                android:id="@+id/tv_nothing_here"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="#181818"
-                android:layout_centerInParent="true"
-                android:paddingBottom="15dp"
-                />
+        android:layout_below="@+id/fl_title"
+        android:background="#fffef7"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/rv_main"
-                android:scrollbars="vertical"
-                android:visibility="gone"/>
+                android:scrollbars="none"
+                android:visibility="gone"
+                />
 
-
-        </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nothing_here"
+        android:id="@+id/tv_nothing_here"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:transitionName="title"
+        android:textColor="#cccccc"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -56,7 +48,9 @@
         android:id="@+id/fl_title"
         android:elevation="4dp"
         android:clipToPadding="false"
-        android:layout_below="@+id/compat_statusbar_placeholder">
+        android:layout_below="@+id/compat_statusbar_placeholder"
+        android:background="@color/primary_dark_material_dark"
+        android:outlineProvider="bounds">
 
         <TextView
             android:layout_width="wrap_content"

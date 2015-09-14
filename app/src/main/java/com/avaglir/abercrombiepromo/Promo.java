@@ -1,5 +1,6 @@
 package com.avaglir.abercrombiepromo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,14 +9,14 @@ import java.util.List;
  *
  * promo model
  */
-public class Promo {
+public class Promo implements Serializable {
     List<Button> button;
     String title;
     String description;
     String footer;
     String image;
 
-    public static class Button {
+    public static class Button implements Serializable {
         private String title;
         private String target;
 

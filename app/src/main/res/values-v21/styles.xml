@@ -6,6 +6,14 @@
         <item name="android:windowBackground">@color/primary_dark_material_dark</item>
         <item name="android:colorBackground">@color/primary_dark_material_dark</item>
         <item name="android:statusBarColor">@color/primary_dark_material_dark</item>
+
+        <item name="android:windowContentTransitions">true</item>
+
+        <item name="android:windowEnterTransition">@android:transition/explode</item>
+        <item name="android:windowExitTransition">@android:transition/explode</item>
+
+        <item name="android:windowSharedElementEnterTransition">@transition/custom_transform</item>
+        <item name="android:windowSharedElementExitTransition">@transition/custom_transform</item>
     </style>
 
 </resources>

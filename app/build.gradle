@@ -31,6 +31,7 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.jakewharton:butterknife:7.0.1'
 
     apt 'com.google.dagger:dagger-compiler:2.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'

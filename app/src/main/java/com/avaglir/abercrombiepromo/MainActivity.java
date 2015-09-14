@@ -1,32 +1,33 @@
 package com.avaglir.abercrombiepromo;
 
-import android.app.Activity;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends Activity {
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-    private RecyclerView mRecyclerView;
+public class MainActivity extends BaseActivity {
+
+    @Bind(R.id.rv_main) RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.srl_main) SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private TextView mAbercrombieTitle;
-    private TextView mNothingHere;
+    @Bind(R.id.tv_abercrombie_title) TextView mAbercrombieTitle;
+    @Bind(R.id.tv_nothing_here) TextView mNothingHere;
 
-    private View mCompatPlaceholderView;
+    @Bind(R.id.compat_statusbar_placeholder) View mCompatPlaceholderView;
 
     private List<Promo> mPromoList;
 
@@ -44,35 +45,27 @@ public class MainActivity extends Activity {
                 .build();
         component.inject(this);
 
-        /**
-         * status bar is transparent and doesn't affect layout in versions before lollipop.
-         * we fill out the space with a simple view here.
-         */
-        mCompatPlaceholderView = findViewById(R.id.compat_statusbar_placeholder);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            //convert dp to pixels:
-            mCompatPlaceholderView.getLayoutParams().height = ((int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics())
-            );
+        ButterKnife.bind(this);
+
+        if (Util.isAfterLollipop()) {
+            getWindow().setAllowEnterTransitionOverlap(true);
+            getWindow().setAllowReturnTransitionOverlap(true);
         }
 
-        mAbercrombieTitle = (TextView) findViewById(R.id.tv_abercrombie_title);
+        expandCompatPlaceholderView(mCompatPlaceholderView);
+
         Typeface garamondBold = Typeface.createFromAsset(getAssets(), "fonts/adobe_garamond_bold.ttf");
         mAbercrombieTitle.setTypeface(garamondBold);
 
-        mNothingHere = ((TextView) findViewById(R.id.tv_nothing_here));
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
         mRecyclerView.setHasFixedSize(true); //slight optimization
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mPromoList = promoController.getPromos();
-        mAdapter = new PromoCardAdapter(mPromoList);
+        mAdapter = new PromoCardAdapter(mPromoList, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        mSwipeRefreshLayout = ((SwipeRefreshLayout) findViewById(R.id.srl_main));
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -90,6 +83,14 @@ public class MainActivity extends Activity {
             mNothingHere.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
         }
+    }
+
+    private List<Promo> generatePromos(int count) {
+        ArrayList<Promo> list = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            list.add(new Promo(null, null, "" + i, "" + i, null, null));
+        }
+        return list;
     }
 
 }
